@@ -1,12 +1,14 @@
-#include <iostream>
-#include <thread>
-#include <mutex>
-#include <atomic>
-#include <future>
-#include <algorithm>
-#include <cassert>
+#include "gtest/gtest.h"
 
-#include <unistd.h>
+#include "tree_mutex.cpp"
+
+
+int main(int argc, char** argv)
+{
+    // testing::InitGoogleTest(&argc, argv);
+    // return RUN_ALL_TESTS();
+}
+
 
 // std::thread
 // std::mutex;
@@ -21,7 +23,3 @@
 // std::async
 // std::package_task
 // std::async
-
-int main()
-{
-}
