@@ -37,7 +37,7 @@ public:
     }
 
 private:
-    std::array<std::atomic<bool>, 2> want_;
+    std::array<std::atomic_bool, 2> want_;
     std::atomic<std::size_t> victim_;
 };
 
@@ -73,7 +73,6 @@ public:
         {
             tree_[parent_(current_node_index)].lock(current_node_index % 2);
         }
-
     }
 
     void unlock(std::size_t thread_id)
