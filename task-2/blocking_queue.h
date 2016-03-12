@@ -12,11 +12,11 @@ public:
     blocking_queue() = delete;
     ~blocking_queue() = default;
 
-    blocking_queue(const blocking_queue & queue) = delete;
-    blocking_queue & operator=(const blocking_queue & queue) = delete;
+    blocking_queue(const blocking_queue& queue)= delete;
+    blocking_queue& operator=(const blocking_queue& queue) = delete;
 
-    blocking_queue(blocking_queue && queue) = default;
-    blocking_queue & operator=(blocking_queue && queue) = default;
+    blocking_queue(blocking_queue&& queue) = default;
+    blocking_queue& operator=(blocking_queue&& queue) = default;
 
     blocking_queue(std::size_t capacity);
 
