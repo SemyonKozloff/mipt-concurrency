@@ -53,4 +53,6 @@ TEST(blocking_queue_test, test_push_pop)
     {
         consumers[i].join();
     }
+
+    ASSERT_TRUE(queue.empty());
 }
