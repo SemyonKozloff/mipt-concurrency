@@ -1,13 +1,11 @@
-#include "gtest/gtest.h"
-
 #include <thread>
-#include <future>
 
+#include "gtest/gtest.h"
 #include "blocking_queue.h"
 
 constexpr std::size_t QUEUE_SIZE = 10;
 constexpr std::size_t NUM_TASKS = 10000;
-constexpr std::size_t NUM_CONSUMERS = 3;
+constexpr std::size_t NUM_CONSUMERS = 4;
 constexpr int POISON_PILL = -1;
 
 blocking_queue<int> queue(QUEUE_SIZE);
@@ -53,6 +51,4 @@ TEST(blocking_queue_test, test_push_pop)
     {
         consumers[i].join();
     }
-
-    ASSERT_TRUE(queue.empty());
 }

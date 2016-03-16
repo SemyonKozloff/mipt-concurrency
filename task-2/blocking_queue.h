@@ -18,13 +18,10 @@ public:
     blocking_queue(blocking_queue&& queue) = default;
     blocking_queue& operator=(blocking_queue&& queue) = default;
 
-    blocking_queue(std::size_t capacity);
+    explicit blocking_queue(std::size_t capacity);
 
     void push(const T& item);
     void pop(T& item);
-
-    std::size_t size() const noexcept;
-    bool empty() const noexcept;
 
 private:
     std::queue<T> queue_;
@@ -64,19 +61,4 @@ void blocking_queue<T>::pop(T& item)
     filled_queue_.notify_one();
 }
 
-template<typename T>
-std::size_t blocking_queue<T>::size() const noexcept
-{
-    std::lock_guard<std::mutex> lock(mutex_);
-
-    return queue_.size();
-}
-
-template<typename T>
-bool blocking_queue<T>::empty() const noexcept
-{
-    std::lock_guard<std::mutex> lock(mutex_);
-
-    return queue_.empty();
-}
 #endif //MIPT_CONCURRENCY_BLOCKING_QUEUE_H
