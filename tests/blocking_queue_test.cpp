@@ -2,6 +2,7 @@
 
 #include "gtest/gtest.h"
 #include "blocking_queue.h"
+#include "thread_pool.h"
 
 constexpr std::size_t QUEUE_SIZE = 10;
 constexpr std::size_t NUM_TASKS = 10000;

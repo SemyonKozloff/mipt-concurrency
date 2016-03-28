@@ -4,10 +4,11 @@ project(mipt-concurrency)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -pthread -Wall")
 
 set(SOURCE_FILES main.cpp
-        task-2/blocking_queue.h tests/blocking_queue_test.cpp
+        prac/rw_mutex.h prac/ordered_mutex.h prac/hash_table.h
         task-1/peterson_mutex.h task-1/peterson_mutex.cpp
         task-1/tree_mutex.h task-1/tree_mutex.cpp
-        prac/rw_mutex.h prac/ordered_mutex.h prac/hash_table.h task-2/thread_pool.h)
+        task-2/thread_pool.h task-2/blocking_queue.h
+        tests/thread_pool_test.cpp tests/blocking_queue_test.cpp)
 add_executable(mipt-concurrency ${SOURCE_FILES})
 
 include_directories(prac)

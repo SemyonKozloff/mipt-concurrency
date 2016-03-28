@@ -26,7 +26,7 @@ public:
     thread_pool();
     explicit thread_pool(std::size_t num_threads);
 
-    std::future<ResultType> submit(std::function<ResultType> function);
+    std::future<ResultType> submit(std::function<ResultType()> function);
 
     void shutdown();
 
@@ -61,20 +61,22 @@ thread_pool<ResultType>::thread_pool(std::size_t num_threads)
         }
     };
 
-    workers_ = std::move(std::vector(num_threads, std::thread(work)));
+    for (std::size_t i = 0; i < num_threads; ++i)
+    {
+        workers_.push_back(std::thread(work));
+    }
 }
 
 template<typename ResultType>
 std::future<ResultType>
-thread_pool<ResultType>::submit(std::function<ResultType> function)
+thread_pool<ResultType>::submit(std::function<ResultType()> function)
 {
-    std::promise<ResultType> promise;
-    auto future = promise.get_future();
+    auto promise_ptr = std::make_shared<std::promise<ResultType>>();
 
-    task new_task(std::move(function), std::move(promise), false);
-    task_queue_.push(std::move(new_task));
+    task new_task(function, promise_ptr, false);
+    task_queue_.push(new_task);
 
-    return future;
+    return promise_ptr->get_future();
 }
 
 template<typename ResultType>
@@ -83,7 +85,7 @@ void thread_pool<ResultType>::shutdown()
     for (std::size_t i = 0; i < workers_.size(); ++i)
     {
         task poison_pill(true);
-        task_queue_.push(std::move(poison_pill)); // push poison pills
+        task_queue_.push(poison_pill); // push poison pills
     }
 
     for (auto&& worker : workers_)
@@ -93,7 +95,8 @@ void thread_pool<ResultType>::shutdown()
 }
 
 template<typename ResultType>
-std::size_t thread_pool<ResultType>::default_num_workers_() const noexcept
+constexpr std::size_t
+thread_pool<ResultType>::default_num_workers_() const noexcept
 {
     std::size_t num_hardware_threads = std::thread::hardware_concurrency();
     return num_hardware_threads == 0 ?
@@ -105,31 +108,24 @@ template<typename ResultType>
 class thread_pool<ResultType>::task
 {
 public:
-    ~task() = default;
-
-    task(const task& task) = delete;
-    task& operator=(const task& task) = delete;
-
-    task(task&& task) = default;
-    task& operator=(task&& task) = default;
-
     task() : is_poisoned_(false)
     { }
 
     explicit task(bool is_poisoned) : is_poisoned_(is_poisoned)
     { }
 
-    task(std::function<ResultType>&& function,
-         std::promise<ResultType>&& promise,
+    task(std::function<ResultType()>function,
+         std::shared_ptr<std::promise<ResultType>> promise_ptr,
          bool is_poisoned) :
-            function_(std::move(function)), promise_(std::move(promise)),
+            function_(function),
+            promise_ptr_(promise_ptr),
             is_poisoned_(is_poisoned)
     { }
 
     void execute()
     {
         auto result = function_();
-        promise_.set_value(std::move(result));
+        promise_ptr_->set_value(result);
     }
 
     bool is_poisoned() const noexcept
@@ -138,11 +134,10 @@ public:
     }
 
 private:
-    std::function<ResultType> function_;
-    std::promise<ResultType> promise_;
+    std::function<ResultType()> function_;
+    std::shared_ptr<std::promise<ResultType>> promise_ptr_;
 
     bool is_poisoned_;
 };
-
 
 #endif //MIPT_CONCURRENCY_THREAD_POOL_H
