@@ -9,7 +9,7 @@ template<typename T>
 class blocking_queue
 {
 public:
-    blocking_queue() = delete;
+    blocking_queue();
     ~blocking_queue() = default;
 
     blocking_queue(const blocking_queue& queue)= delete;
@@ -31,6 +31,11 @@ private:
     mutable std::condition_variable empty_queue_;
     mutable std::condition_variable filled_queue_;
 };
+
+template<typename T>
+blocking_queue<T>::blocking_queue() :
+        capacity_(std::numeric_limits<std::size_t>::max())
+{ }
 
 template<typename T>
 blocking_queue<T>::blocking_queue(std::size_t capacity) : capacity_(capacity)
