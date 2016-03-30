@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.3)
 project(mipt-concurrency)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -pthread -Wall")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -pthread -Wall -g")
 
 set(SOURCE_FILES main.cpp
         prac/rw_mutex.h prac/ordered_mutex.h prac/hash_table.h

@@ -53,10 +53,14 @@ thread_pool<ResultType>::thread_pool(std::size_t num_threads)
 {
     auto work = [this]
     {
-        for (task current_task;
-             !current_task.is_poisoned();
-             task_queue_.pop(current_task))
+        task current_task;
+        while (true)
         {
+            task_queue_.pop(current_task);
+            if (current_task.is_poisoned())
+            {
+                break;
+            }
             current_task.execute();
         }
     };
@@ -82,15 +86,18 @@ thread_pool<ResultType>::submit(std::function<ResultType()> function)
 template<typename ResultType>
 void thread_pool<ResultType>::shutdown()
 {
-    for (std::size_t i = 0; i < workers_.size(); ++i)
+    for (std::size_t i = 0; i < workers_.size(); ++i) // pushing poison pills
     {
         task poison_pill(true);
-        task_queue_.push(poison_pill); // push poison pills
+        task_queue_.push(poison_pill);
     }
 
     for (auto&& worker : workers_)
     {
-        worker.join();
+        if (worker.joinable())
+        {
+            worker.join();
+        }
     }
 }
 
@@ -114,7 +121,7 @@ public:
     explicit task(bool is_poisoned) : is_poisoned_(is_poisoned)
     { }
 
-    task(std::function<ResultType()>function,
+    task(std::function<ResultType()> function,
          std::shared_ptr<std::promise<ResultType>> promise_ptr,
          bool is_poisoned) :
             function_(function),

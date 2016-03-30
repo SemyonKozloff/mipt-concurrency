@@ -1,12 +1,17 @@
+#include <future>
+
 #include "gtest/gtest.h"
 #include "thread_pool.h"
-/*
-TEST(thread_pool_test, test_something)
+
+TEST(thread_pool_test, test_submit)
 {
     thread_pool<int> dead_pool;
-    std::function<int()> func = [] { return 42; };
+    auto func = [] { return 42; };
     auto future = dead_pool.submit(func);
-    ASSERT_EQ(future.get(), 42);
+    auto result = future.get();
+
+    EXPECT_EQ(42, result);
+
     dead_pool.shutdown();
 }
-*/
+

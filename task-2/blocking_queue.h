@@ -9,7 +9,6 @@ template<typename T>
 class blocking_queue
 {
 public:
-    blocking_queue();
     ~blocking_queue() = default;
 
     blocking_queue(const blocking_queue& queue)= delete;
@@ -18,6 +17,7 @@ public:
     blocking_queue(blocking_queue&& queue) = default;
     blocking_queue& operator=(blocking_queue&& queue) = default;
 
+    blocking_queue();
     explicit blocking_queue(std::size_t capacity);
 
     void push(const T& item);
