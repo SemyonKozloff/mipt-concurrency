@@ -32,7 +32,7 @@ public:
 
 private:
     constexpr std::size_t default_num_workers_() const noexcept;
-    constexpr static std::size_t DEFAULT_NUM_THREADS_ = 3;
+    constexpr static std::size_t DEFAULT_NUM_THREADS_ = 4;
 
     std::vector<std::thread> workers_;
     blocking_queue<task> task_queue_;
