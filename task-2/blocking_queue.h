@@ -11,7 +11,7 @@ class blocking_queue
 public:
     ~blocking_queue() = default;
 
-    blocking_queue(const blocking_queue& queue)= delete;
+    blocking_queue(const blocking_queue& queue) = delete;
     blocking_queue& operator=(const blocking_queue& queue) = delete;
 
     blocking_queue(blocking_queue&& queue) = default;

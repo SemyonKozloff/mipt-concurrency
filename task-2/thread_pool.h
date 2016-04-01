@@ -31,7 +31,7 @@ public:
     void shutdown();
 
 private:
-    constexpr std::size_t default_num_workers_() const noexcept;
+    std::size_t default_num_workers_() const noexcept;
     constexpr static std::size_t DEFAULT_NUM_THREADS_ = 4;
 
     std::vector<std::thread> workers_;
@@ -102,8 +102,7 @@ void thread_pool<ResultType>::shutdown()
 }
 
 template<typename ResultType>
-constexpr std::size_t
-thread_pool<ResultType>::default_num_workers_() const noexcept
+std::size_t thread_pool<ResultType>::default_num_workers_() const noexcept
 {
     std::size_t num_hardware_threads = std::thread::hardware_concurrency();
     return num_hardware_threads == 0 ?
@@ -131,7 +130,15 @@ public:
 
     void execute()
     {
-        auto result = function_();
+        ResultType result;
+        try
+        {
+            result = function_();
+        }
+        catch (...)
+        {
+            promise_ptr_->set_exception(std::current_exception());
+        }
         promise_ptr_->set_value(result);
     }
 
