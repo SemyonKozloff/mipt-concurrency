@@ -7,3 +7,6 @@ target_link_libraries(run_blocking_queue_test gtest gtest_main)
 
 add_executable(run_thread_pool_test thread_pool_test.cpp)
 target_link_libraries(run_thread_pool_test gtest gtest_main)
+
+add_executable(run_cyclic_barrier_test cyclic_barrier_test.cpp)
+target_link_libraries(run_cyclic_barrier_test gtest gtest_main)

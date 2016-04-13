@@ -8,7 +8,9 @@ set(SOURCE_FILES main.cpp
         task-1/peterson_mutex.h task-1/peterson_mutex.cpp
         task-1/tree_mutex.h task-1/tree_mutex.cpp
         task-2/thread_pool.h task-2/blocking_queue.h
-        tests/thread_pool_test.cpp tests/blocking_queue_test.cpp)
+        tests/thread_pool_test.cpp tests/blocking_queue_test.cpp
+        task-3/cyclic_barrier.h task-3/cyclic_barrier.cpp
+        task-3/semaphore.cpp task-3/semaphore.h tests/cyclic_barrier_test.cpp)
 add_executable(mipt-concurrency ${SOURCE_FILES})
 
 include_directories(prac)
@@ -19,6 +21,9 @@ add_subdirectory(task-1)
 
 include_directories(task-2)
 add_subdirectory(task-2)
+
+include_directories(task-3)
+add_subdirectory(task-3)
 
 set(GTEST_ROOT /home/semyon/Apps/googletest)
 include_directories(${GTEST_ROOT} ${GTEST_ROOT}/include)
