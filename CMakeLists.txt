@@ -7,10 +7,12 @@ set(SOURCE_FILES main.cpp
         prac/rw_mutex.h prac/ordered_mutex.h prac/hash_table.h
         task-1/peterson_mutex.h task-1/peterson_mutex.cpp
         task-1/tree_mutex.h task-1/tree_mutex.cpp
-        task-2/thread_pool.h task-2/blocking_queue.h
-        tests/thread_pool_test.cpp tests/blocking_queue_test.cpp
+        task-2/thread_pool.h tests/thread_pool_test.cpp
+        task-2/blocking_queue.h tests/blocking_queue_test.cpp
         task-3/cyclic_barrier.h task-3/cyclic_barrier.cpp
-        task-3/semaphore.cpp task-3/semaphore.h tests/cyclic_barrier_test.cpp)
+        tests/cyclic_barrier_test.cpp
+        task-3/semaphore.cpp task-3/semaphore.h
+        task-3/concurrent_hash_set.h)
 add_executable(mipt-concurrency ${SOURCE_FILES})
 
 include_directories(prac)

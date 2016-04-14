@@ -8,7 +8,7 @@ cyclic_barrier::cyclic_barrier(std::size_t num_parties) :
 void cyclic_barrier::await()
 {
     std::unique_lock<std::mutex> lock(mutex_);
-    entrance_gate_cv_.wait(lock, [this] { return !entrance_is_closed_;} );
+    entrance_gate_cv_.wait(lock, [this] { return !entrance_is_closed_; });
 
     if (++num_parties_on_barrier_ == num_parties_)
     {
@@ -25,5 +25,4 @@ void cyclic_barrier::await()
         entrance_is_closed_ = false;
         entrance_gate_cv_.notify_all();
     }
-
 }

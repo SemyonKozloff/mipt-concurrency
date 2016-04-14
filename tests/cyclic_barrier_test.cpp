@@ -7,7 +7,7 @@ const std::size_t LENGTH = 10;
 const std::size_t NUM_ITERS = 14;
 
 // https://github.com/rlipovsky/mipt-parallel-2015/blob/master/cyclic_barrier/rotate_test.cpp
-TEST(cyclic_barrier_test, test_await)
+TEST(cyclic_barrier_test, rotate_test)
 {
     std::vector<std::size_t> data;
     for (std::size_t i = 0; i < LENGTH; ++i)

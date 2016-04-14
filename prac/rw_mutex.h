@@ -40,6 +40,7 @@ public:
     void unlock_shared()
     {
         std::unique_lock<std::mutex> lock(mutex_);
+
         if (--num_readers_ == 0)
         {
             lock.unlock();
