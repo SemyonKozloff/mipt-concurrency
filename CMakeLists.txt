@@ -12,7 +12,7 @@ set(SOURCE_FILES main.cpp
         task-3/cyclic_barrier.h task-3/cyclic_barrier.cpp
         tests/cyclic_barrier_test.cpp
         task-3/semaphore.cpp task-3/semaphore.h
-        task-3/concurrent_hash_set.h)
+        task-3/concurrent_hash_set.h tests/concurrent_hash_set_test.cpp)
 add_executable(mipt-concurrency ${SOURCE_FILES})
 
 include_directories(prac)

@@ -25,7 +25,6 @@ public:
     concurrent_hash_set(std::size_t num_stripes = DEF_NUM_STRIPES_,
                         std::size_t growth_factor = DEF_GROWTH_FACTOR_,
                         float max_load_factor = DEF_MAX_LOAD_FACTOR_) :
-            hash_function_(),
             growth_factor_(growth_factor),
             max_load_factor_(max_load_factor),
             num_elements_(0),
@@ -45,7 +44,7 @@ public:
         std::size_t bucket_index = hash % hash_table_.size();
         for (const auto& hashed_value : hash_table_[bucket_index])
         {
-            if (EqualityPredicate(hashed_value, new_value))
+            if (equal_(hashed_value, new_value))
             {
                 return;
             }
@@ -86,7 +85,7 @@ public:
         std::size_t bucket_index = hash % hash_table_.size();
         for (const auto& hashed_value : hash_table_[bucket_index])
         {
-            if (EqualityPredicate(hashed_value, value))
+            if (equal_(hashed_value, value))
             {
                 return true;
             }
@@ -121,12 +120,13 @@ private:
             lock_array.emplace_back(mutex_array_[i]);
         }
 
+        std::size_t new_table_size = growth_factor_ * hash_table_.size();
         std::vector<std::forward_list<ValueType>>
-                temp_hash_table(2 * hash_table_.size());
+        temp_hash_table(new_table_size);
 
-        for (auto& bucket : hash_table_)
+        for (const auto& bucket : hash_table_)
         {
-            for (auto& value : bucket)
+            for (const auto& value : bucket)
             {
                 std::size_t hash = hash_function_(value);
                 std::size_t bucket_index = hash % temp_hash_table.size();
@@ -139,6 +139,7 @@ private:
     }
 
     HashFunction hash_function_;
+    EqualityPredicate equal_;
 
     const std::size_t growth_factor_;
     const float max_load_factor_;
