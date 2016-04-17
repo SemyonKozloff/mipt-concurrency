@@ -134,12 +134,12 @@ public:
         try
         {
             result = function_();
+            promise_ptr_->set_value(result);
         }
         catch (...)
         {
             promise_ptr_->set_exception(std::current_exception());
         }
-        promise_ptr_->set_value(result);
     }
 
     bool is_poisoned() const noexcept

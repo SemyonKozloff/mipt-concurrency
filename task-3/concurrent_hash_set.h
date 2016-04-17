@@ -30,7 +30,6 @@ public:
             num_elements_(0),
             hash_table_(4 * num_stripes),
             mutex_array_(num_stripes)
-
     { }
 
     void insert(const ValueType& new_value)
@@ -122,7 +121,7 @@ private:
 
         std::size_t new_table_size = growth_factor_ * hash_table_.size();
         std::vector<std::forward_list<ValueType>>
-        temp_hash_table(new_table_size);
+                temp_hash_table(new_table_size);
 
         for (const auto& bucket : hash_table_)
         {
@@ -149,10 +148,10 @@ private:
 
     mutable std::vector<std::shared_timed_mutex> mutex_array_;
 
-    constexpr static std::size_t DEF_NUM_STRIPES_ = 8;
-
     constexpr static std::size_t DEF_GROWTH_FACTOR_ = 2;
     constexpr static float DEF_MAX_LOAD_FACTOR_ = 2.0;
+
+    constexpr static std::size_t DEF_NUM_STRIPES_ = 8;
 };
 
 #endif //MIPT_CONCURRENCY_CONCURRENT_HASH_SET_H

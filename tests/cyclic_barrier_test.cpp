@@ -23,14 +23,14 @@ TEST(cyclic_barrier_test, rotate_test)
         threads.emplace_back(
                 [i, &data, &barrier]()
                 {
-                    for (std::size_t k = 0; k < NUM_ITERS; ++k) {
+                    for (std::size_t k = 0; k < NUM_ITERS; ++k)
+                    {
                         std::size_t next = data[(i + 1) % data.size()];
                         barrier.await();
                         data[i] = next;
                         barrier.await();
                     }
-                }
-        );
+                });
     }
 
     for (auto& t : threads)
