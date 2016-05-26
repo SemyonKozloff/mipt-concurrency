@@ -14,7 +14,8 @@ set(SOURCE_FILES main.cpp
         task-3/semaphore.cpp task-3/semaphore.h
         task-4/concurrent_hash_set.h tests/concurrent_hash_set_test.cpp
         prac/spinlock.h tests/spinlock_test.cpp
-        task-3/robot_sem.h task-3/robot_cond.h tests/robot_test.cpp)
+        task-3/robot_sem.h task-3/robot_cond.h tests/robot_test.cpp
+        task-6/spsc_ring_buffer.h)
 add_executable(mipt-concurrency ${SOURCE_FILES})
 
 include_directories(prac)

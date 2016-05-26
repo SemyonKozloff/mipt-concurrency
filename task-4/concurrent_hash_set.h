@@ -4,6 +4,7 @@
 #include <vector>
 #include <forward_list>
 #include <shared_mutex>
+#include <atomic>
 
 
 template<typename ValueType,
@@ -143,7 +144,7 @@ private:
     const std::size_t growth_factor_;
     const float max_load_factor_;
 
-    std::size_t num_elements_;
+    std::atomic_size_t num_elements_;
     std::vector<std::forward_list<ValueType>> hash_table_;
 
     mutable std::vector<std::shared_timed_mutex> mutex_array_;

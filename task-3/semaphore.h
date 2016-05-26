@@ -9,11 +9,11 @@ class semaphore
 public:
     ~semaphore() = default;
 
-    semaphore(const semaphore& semaphore) = delete;
-    semaphore& operator=(const semaphore& semaphore) = delete;
+    semaphore(const semaphore& sem) = delete;
+    semaphore& operator=(const semaphore& sem) = delete;
 
-    semaphore(semaphore&& semaphore) = default;
-    semaphore& operator=(semaphore&& semaphore) = default;
+    semaphore(semaphore&& sem) = default;
+    semaphore& operator=(semaphore&& sem) = default;
 
     semaphore() = delete;
     explicit semaphore(std::size_t initial_counter);

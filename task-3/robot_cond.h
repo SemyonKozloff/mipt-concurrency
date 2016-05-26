@@ -7,7 +7,8 @@
 
 class robot_cond
 {
-    enum class turn_type {
+    enum class turn_type
+    {
         LEFT, RIGHT
     };
 

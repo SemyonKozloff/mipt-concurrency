@@ -3,10 +3,10 @@
 #include "gtest/gtest.h"
 #include "blocking_queue.h"
 
-constexpr std::size_t QUEUE_SIZE = 10;
-constexpr std::size_t NUM_TASKS = 10000;
-constexpr std::size_t NUM_CONSUMERS = 4;
-constexpr int POISON_PILL = -1;
+const std::size_t QUEUE_SIZE = 10;
+const std::size_t NUM_TASKS = 10000;
+const std::size_t NUM_CONSUMERS = 4;
+const int POISON_PILL = -1;
 
 blocking_queue<int> queue(QUEUE_SIZE);
 

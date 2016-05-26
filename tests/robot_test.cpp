@@ -4,7 +4,7 @@
 #include "robot_cond.h"
 #include "robot_sem.h"
 
-constexpr std::size_t NUM_STEPS = 10;
+const std::size_t NUM_STEPS = 10;
 
 template<typename RobotType>
 void test()

@@ -17,11 +17,11 @@ class thread_pool
 public:
     ~thread_pool();
 
-    thread_pool(const thread_pool& thread_pool) = delete;
-    thread_pool& operator=(const thread_pool& thread_pool) = delete;
+    thread_pool(const thread_pool& pool) = delete;
+    thread_pool& operator=(const thread_pool& pool) = delete;
 
-    thread_pool(thread_pool&& thread_pool) = default;
-    thread_pool& operator=(thread_pool&& thread_pool) = default;
+    thread_pool(thread_pool&& pool) = default;
+    thread_pool& operator=(thread_pool&& pool) = default;
 
     thread_pool();
     explicit thread_pool(std::size_t num_threads);

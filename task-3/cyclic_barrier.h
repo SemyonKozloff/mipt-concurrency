@@ -8,11 +8,11 @@ class cyclic_barrier
 public:
     ~cyclic_barrier() = default;
 
-    cyclic_barrier(const cyclic_barrier& cyclic_barrier) = delete;
-    cyclic_barrier& operator=(const cyclic_barrier& cyclic_barrier) = delete;
+    cyclic_barrier(const cyclic_barrier& barrier) = delete;
+    cyclic_barrier& operator=(const cyclic_barrier& barrier) = delete;
 
-    cyclic_barrier(cyclic_barrier&& cyclic_barrier) = default;
-    cyclic_barrier& operator=(cyclic_barrier&& cyclic_barrier) = default;
+    cyclic_barrier(cyclic_barrier&& barrier) = default;
+    cyclic_barrier& operator=(cyclic_barrier&& barrier) = default;
 
     cyclic_barrier() = delete;
     explicit cyclic_barrier(std::size_t num_parties);
