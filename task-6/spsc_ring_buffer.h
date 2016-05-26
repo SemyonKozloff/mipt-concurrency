@@ -19,9 +19,11 @@ public:
         std::size_t tail = tail_.load(std::memory_order_relaxed);
         std::size_t after_tail = next_(tail_);
         if (after_tail == head_.load(std::memory_order_acquire))
+        {
             return false;
+        }
 
-        bufffer_[tail_] = value;
+        bufffer_[tail] = value;
         tail_.store(after_tail, std::memory_order_release);
 
         return true;
@@ -31,11 +33,13 @@ public:
     {
 
         std::size_t head = head_.load(std::memory_order_relaxed);
-        if (head_ == tail_.load(std::memory_order_acquire))
+        if (head == tail_.load(std::memory_order_acquire))
+        {
             return false;
+        }
 
-        value = bufffer_[head_];
-        head_.store(next_(head_), std::memory_order_release);
+        value = bufffer_[head];
+        head_.store(next_(head), std::memory_order_release);
 
         return true;
     }
