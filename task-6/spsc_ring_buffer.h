@@ -50,7 +50,7 @@ private:
     std::atomic_size_t tail_;
     std::size_t capacity_;
 
-    std::size_t next_(size_t current) const
+    std::size_t next_(std::size_t current) const
     {
         return (current + 1) % capacity_;
     }
